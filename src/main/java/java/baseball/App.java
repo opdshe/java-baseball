@@ -3,30 +3,42 @@
  */
 package main.java.java.baseball;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
     public static String createRandomNum(){
         String random="";
         while(random.length()<3){
             String temp=String.valueOf((int)(Math.random() *9 +1));
             if(!random.contains(temp)){random+=temp;}
         }
-        System.out.println("랜덤변수: "+random);
+        //System.out.println("랜덤변수: "+random);
         return random;
     }
 
+    public static int[] calculate(String random, String myNum){
+        int[] count = new int[2];
+        for(int i =0;i<random.length();i++){
+            if (random.charAt(i)==myNum.charAt(i)){
+                count[0]+=1;
+            }else if(random.contains(myNum.substring(i,i+1))){
+                count[1]+=1;
+            }
+        }
+        return count;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
         Scanner sc = new Scanner(System.in);
         do{
             System.out.println("숫자를 입력해 주세요.");
-            int key= sc.nextInt();
             String random=createRandomNum();
+            String myNum= sc.next();
+            int[] result=calculate(random,myNum);
             break;
         }while(true);
     }

@@ -11,9 +11,11 @@ public class App {
     static Scanner sc = new Scanner(System.in);
     static int strikeCount;
     static int ballCount;
+    static boolean needNewInput = true;
     static final int STRIKE_OUT = 3;
-    static final int DEFAULT = 1;
     static final int MAX_INPUT_LENGTH = 3;
+    static final int PLAY_MORE = 1;
+    static final int TERMINATE = 2;
 
     public static String createRandomNum() {
         StringBuilder randomNum = new StringBuilder();
@@ -38,34 +40,34 @@ public class App {
         }
     }
 
-    public static int printResult() {
-        String ans = "";
+    public static void printResult() {
+        StringBuilder result = new StringBuilder();
         if (strikeCount == STRIKE_OUT) {
-            return DEFAULT + 1;
+            needNewInput = false;
+            return;
         }
         if (strikeCount + ballCount > 0) {
             if (strikeCount > 0) {
-                ans += strikeCount + " 스트라이크 ";
+                result.append(strikeCount).append(" 스트라이크 ");
             }
             if (ballCount > 0) {
-                ans += ballCount + " 볼";
+                result.append(ballCount).append(" 볼 ");
             }
-            System.out.println(ans);
+            System.out.println(result);
         } else {
             System.out.println("낫싱");
         }
-        return DEFAULT;
     }
 
     public static void play() {
-        int key = DEFAULT;
         String randomNum = createRandomNum();
-        while (key == DEFAULT) {
+        needNewInput = true;
+        while (needNewInput) {
             System.out.println("숫자를 입력해 주세요.");
             try {
                 String myNum = String.valueOf(sc.nextInt());
                 calculate(randomNum, myNum);
-                key = printResult();
+                printResult();
             } catch (InputMismatchException ime) {
                 ime.printStackTrace();
                 System.out.println("---------------숫자만 입력가능합니다.---------------");
@@ -82,7 +84,7 @@ public class App {
             System.out.println("3개의 숫자를 맞히셧습니다! 게임 종료.");
             System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
             key = sc.nextInt();
-        } while (key == DEFAULT);
+        } while (key == PLAY_MORE);
         sc.close();
     }
 }

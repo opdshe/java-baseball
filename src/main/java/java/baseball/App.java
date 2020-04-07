@@ -5,6 +5,7 @@ package main.java.java.baseball;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -43,19 +44,24 @@ public class App {
             System.out.println("낫싱");
         }
         return 0;
-
     }
 
     public static void play(){
         int key=0;
         Scanner sc = new Scanner(System.in);
         String random=createRandomNum();
-        System.out.println("숫자를 입력해 주세요.");
 
         while(key==0){
-            String myNum= sc.next();
-            int[] result=calculate(random,myNum);
-            key=printResult(result);
+            System.out.println("숫자를 입력해 주세요.");
+            try{
+                String myNum= String.valueOf(sc.nextInt());
+                int[] result=calculate(random,myNum);
+                key=printResult(result);
+            }catch (InputMismatchException ime){
+                sc=new Scanner(System.in);
+                //ime.printStackTrace();
+                System.out.println("---------------숫자만 입력가능합니다.---------------");
+            }
         }
 
     }
@@ -70,5 +76,6 @@ public class App {
             System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
             key=sc.nextInt();
         }while(key==1);
+        sc.close();
     }
 }

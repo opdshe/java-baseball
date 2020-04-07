@@ -3,7 +3,6 @@
  */
 package main.java.java.baseball;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,22 +11,23 @@ public class App {
     static Scanner sc = new Scanner(System.in);
     static int strikeCount;
     static int ballCount;
-    static final int DEFAULT=1;
+    static final int STRIKE_OUT = 3;
+    static final int DEFAULT = 1;
 
     public static String createRandomNum() {
         StringBuilder randomNum = new StringBuilder();
         while (randomNum.length() < 3) {
-            String temp = String.valueOf((int) (Math.random() * 9 + 1));
-            if (!randomNum.toString().contains(temp)) {
-                randomNum.append(temp);
+            String oneDigit = String.valueOf((int) (Math.random() * 9 + 1));
+            if (!randomNum.toString().contains(oneDigit)) {
+                randomNum.append(oneDigit);
             }
         }
         return randomNum.toString();
     }
 
-    public static  void calculate(String random, String myNum) {
-        strikeCount=0;
-        ballCount=0;
+    public static void calculate(String random, String myNum) {
+        strikeCount = 0;
+        ballCount = 0;
         for (int i = 0; i < random.length(); i++) {
             if (random.charAt(i) == myNum.charAt(i)) {
                 strikeCount += 1;
@@ -39,10 +39,10 @@ public class App {
 
     public static int printResult() {
         String ans = "";
-        if (strikeCount == 3) {
-            return DEFAULT+1;
+        if (strikeCount == STRIKE_OUT) {
+            return DEFAULT + 1;
         }
-        if (strikeCount+ballCount > 0) {
+        if (strikeCount + ballCount > 0) {
             if (strikeCount > 0) {
                 ans += strikeCount + " 스트라이크 ";
             }
@@ -75,7 +75,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        int key = DEFAULT;
+        int key;
         do {
             play();
             System.out.println("3개의 숫자를 맞히셧습니다! 게임 종료.");

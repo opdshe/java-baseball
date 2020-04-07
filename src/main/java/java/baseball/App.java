@@ -15,7 +15,7 @@ public class App {
             String temp=String.valueOf((int)(Math.random() *9 +1));
             if(!random.contains(temp)){random+=temp;}
         }
-        //System.out.println("랜덤변수: "+random);
+        System.out.println("랜덤변수: "+random);
         return random;
     }
 
@@ -31,6 +31,19 @@ public class App {
         return count;
     }
 
+    public static void printResult(int[] result){
+        String ans="";
+        if(Arrays.stream(result).sum()>0){
+            if(result[0]>0){ans+=result[0]+" 스트라이크 ";}
+            if(result[1]>0){ans+=result[1]+" 볼";}
+            System.out.println(ans);
+
+        }else{
+            System.out.println("낫싱");
+        }
+
+    }
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -39,6 +52,7 @@ public class App {
             String random=createRandomNum();
             String myNum= sc.next();
             int[] result=calculate(random,myNum);
+            printResult(result);
             break;
         }while(true);
     }

@@ -3,52 +3,51 @@
  */
 package main.java.java.baseball;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class App {
+public class AppCopy {
     static Scanner sc = new Scanner(System.in);
-    static final int STRIKE_IDX = 0;
-    static final int BALL_IDX = 1;
+    static int strikeCount;
+    static int ballCount;
     static final int DEFAULT=1;
 
     public static String createRandomNum() {
-        String randomNum = "";
+        StringBuilder randomNum = new StringBuilder();
         while (randomNum.length() < 3) {
             String temp = String.valueOf((int) (Math.random() * 9 + 1));
-            if (!randomNum.contains(temp)) {
-                randomNum += temp;
+            if (!randomNum.toString().contains(temp)) {
+                randomNum.append(temp);
             }
         }
-        return randomNum;
+        return randomNum.toString();
     }
 
-    public static int[] calculate(String random, String myNum) {
-        int[] count = new int[2];
+    public static  void calculate(String random, String myNum) {
+        strikeCount=0;
+        ballCount=0;
         for (int i = 0; i < random.length(); i++) {
             if (random.charAt(i) == myNum.charAt(i)) {
-                count[STRIKE_IDX] += 1;
+                strikeCount += 1;
             } else if (random.contains(myNum.substring(i, i + 1))) {
-                count[BALL_IDX] += 1;
+                ballCount += 1;
             }
         }
-        return count;
     }
 
-    public static int printResult(int[] count) {
+    public static int printResult() {
         String ans = "";
-        if (count[STRIKE_IDX] == 3) {
+        if (strikeCount == 3) {
             return DEFAULT+1;
         }
-        if (Arrays.stream(count).sum() > 0) {
-            if (count[STRIKE_IDX] > 0) {
-                ans += count[STRIKE_IDX] + " 스트라이크 ";
+        if (strikeCount+ballCount > 0) {
+            if (strikeCount > 0) {
+                ans += strikeCount + " 스트라이크 ";
             }
-            if (count[BALL_IDX] > 0) {
-                ans += count[BALL_IDX] + " 볼";
+            if (ballCount > 0) {
+                ans += ballCount + " 볼";
             }
             System.out.println(ans);
         } else {
@@ -59,13 +58,13 @@ public class App {
 
     public static void play() {
         int key = DEFAULT;
-        String random = createRandomNum();
+        String randomNum = createRandomNum();
         while (key == DEFAULT) {
             System.out.println("숫자를 입력해 주세요.");
             try {
                 String myNum = String.valueOf(sc.nextInt());
-                int[] result = calculate(random, myNum);
-                key = printResult(result);
+                calculate(randomNum, myNum);
+                key = printResult();
             } catch (InputMismatchException ime) {
                 ime.printStackTrace();
                 System.out.println("---------------숫자만 입력가능합니다.---------------");

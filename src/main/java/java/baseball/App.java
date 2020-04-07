@@ -15,7 +15,7 @@ public class App {
             String temp=String.valueOf((int)(Math.random() *9 +1));
             if(!random.contains(temp)){random+=temp;}
         }
-        System.out.println("랜덤변수: "+random);
+        //System.out.println("랜덤변수: "+random);
         return random;
     }
 
@@ -31,8 +31,9 @@ public class App {
         return count;
     }
 
-    public static void printResult(int[] result){
+    public static int printResult(int[] result){
         String ans="";
+        if(result[0]==3){return 1;}
         if(Arrays.stream(result).sum()>0){
             if(result[0]>0){ans+=result[0]+" 스트라이크 ";}
             if(result[1]>0){ans+=result[1]+" 볼";}
@@ -41,19 +42,33 @@ public class App {
         }else{
             System.out.println("낫싱");
         }
+        return 0;
+
+    }
+
+    public static void play(){
+        int key=0;
+        Scanner sc = new Scanner(System.in);
+        String random=createRandomNum();
+        System.out.println("숫자를 입력해 주세요.");
+
+        while(key==0){
+            String myNum= sc.next();
+            int[] result=calculate(random,myNum);
+            key=printResult(result);
+        }
 
     }
 
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc= new Scanner(System.in);
+        int key=1;
         do{
-            System.out.println("숫자를 입력해 주세요.");
-            String random=createRandomNum();
-            String myNum= sc.next();
-            int[] result=calculate(random,myNum);
-            printResult(result);
-            break;
-        }while(true);
+            play();
+            System.out.println("3개의 숫자를 맞히셧습니다! 게임 종료.");
+            System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+            key=sc.nextInt();
+        }while(key==1);
     }
 }

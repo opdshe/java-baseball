@@ -13,10 +13,11 @@ public class App {
     static int ballCount;
     static final int STRIKE_OUT = 3;
     static final int DEFAULT = 1;
+    static final int MAX_INPUT_LENGTH = 3;
 
     public static String createRandomNum() {
         StringBuilder randomNum = new StringBuilder();
-        while (randomNum.length() < 3) {
+        while (randomNum.length() < MAX_INPUT_LENGTH) {
             String oneDigit = String.valueOf((int) (Math.random() * 9 + 1));
             if (!randomNum.toString().contains(oneDigit)) {
                 randomNum.append(oneDigit);

@@ -76,7 +76,6 @@ public class App {
         }
     }
 
-
     public static void main(String[] args) {
         int key;
         do {
@@ -84,7 +83,7 @@ public class App {
             System.out.println("3개의 숫자를 맞히셧습니다! 게임 종료.");
             System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
             key = sc.nextInt();
-        } while (key == PLAY_MORE);
+        } while (key != TERMINATE);
         sc.close();
     }
 }
